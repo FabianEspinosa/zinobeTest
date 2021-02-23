@@ -1,14 +1,16 @@
 <?php
-
+declare (strict_types = 1);
 namespace App\Http\Controllers;
 
 use App\Kernel\Request;
+use App\Kernel\Response;
 
 class HomeController
 {
 
     public function index(Request $request)
     {
-        echo 'Hola peto';
+        // Response::view('login', $request->getParameters());
+        Response::error(404);
     }
 }
