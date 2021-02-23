@@ -26,6 +26,7 @@
     "require-dev":{
         "phpunit/phpunit": "7",
         "doctrine/orm": "*",
+        "doctrine/doctrine-migrations-bundle": "*",
         "vlucas/phpdotenv": "*"
     },
     "config": {
