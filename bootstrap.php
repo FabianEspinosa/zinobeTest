@@ -4,6 +4,9 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 function getEntityManager () {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+
     $dbParams  = array (
         'host'     => $_ENV['DATABASE_HOST'],
         'port'     => $_ENV['DATABASE_PORT'],

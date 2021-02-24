@@ -11,24 +11,20 @@
     "minimum-stability": "dev",
     "autoload" : {
         "psr-4": {
-            "App\\": "src"
+            "App\\": "src/",
+            "App\\Entity\\": "src/Entity/"
         }
-    },
-    "autoload-dev" : {
-        "psr-4": {
-            "Test\\": "tests"
-        }
-    },
+    },  
     "scripts": {
         "tests" : "./vendor/bin/phpunit tests"
     },
-    "require": {},
-    "require-dev":{
+    "require": {
+        "rakit/validation": "dev-master",
         "phpunit/phpunit": "7",
         "doctrine/orm": "*",
         "doctrine/doctrine-migrations-bundle": "*",
         "vlucas/phpdotenv": "*"
-    },
+    },    
     "config": {
         "bin-dir" : "bin"
     }

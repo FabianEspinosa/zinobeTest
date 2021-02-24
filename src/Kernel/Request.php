@@ -12,7 +12,7 @@ class Request
 
     public function __construct()
     {
-        $this->contentType = $_SERVER['CONTENT_TYPE'];
+        $this->contentType = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : 'APPLICATION/JSON';
         $this->method      = strtoupper($_SERVER['REQUEST_METHOD']);
         $this->url         = $_SERVER['PATH_INFO'] ?? '/';
         $this->ip          = $_SERVER['REMOTE_ADDR'];
@@ -46,13 +46,14 @@ class Request
 
     protected function prepareParams()
     {
+        
         if (strtoupper($_SERVER['REQUEST_METHOD']) == 'GET') {
             $params = $_REQUEST;
         } else {
             if (strtoupper($_SERVER['CONTENT_TYPE']) == 'APPLICATION/JSON') {
                 $params = json_decode(file_get_contents('php://input'), true);
             } else {
-                $params = $_POST;
+                $params = isset($_POST) ? $_POST : [];
             }
         }
         if (isset($params)) {

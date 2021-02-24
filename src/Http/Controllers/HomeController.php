@@ -10,7 +10,6 @@ class HomeController
 
     public function index(Request $request)
     {
-        // Response::view('login', $request->getParameters());
-        Response::error(404);
+        Response::view('login', $request->getParameters());      
     }
 }
