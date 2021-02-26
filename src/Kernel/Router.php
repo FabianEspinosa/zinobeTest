@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 
 namespace App\Kernel;
+use App\Kernel\Response;
 
 class Router
 {
@@ -37,7 +38,7 @@ class Router
         if ($callback != null) {
             call_user_func($callback, $request);
         } else {
-            echo 'Page not found';
+            Response::redirect('/');
         }
     }
 
