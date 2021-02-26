@@ -25,7 +25,7 @@ class AuthController
             Response::view('login', ['msg' => 'Rectifique los datos']);
         } else {
             $entityManager = getEntityManager();
-            $user          = $entityManager->getRepository(Users::class)->findOneBy(array('document' => $data['document']));
+            $user          = $entityManager->getRepository(Users::class)->findOneBy(array('document' => trim($data['document'])));
             if (!empty($user)) {
                 if (sha1($data['password']) == $user->getPassword()) {
                     AuthController::createSession($user->getId(), $user->getUsername(), $user->getEmail());
@@ -46,5 +46,16 @@ class AuthController
         $_SESSION['username'] = $username;
         $_SESSION['email']    = $email;       
         Response::redirect('search');
+    }
+
+    
+    public function logout(Request $request)
+    {
+        session_start();
+        unset($_SESSION['userId']);
+        unset($_SESSION['username']);
+        unset($_SESSION['email']);
+        session_destroy();
+        Response::view('login', $request->getParameters());      
     }
 }

@@ -1,4 +1,10 @@
-
+<?php
+use App\Kernel\Response;
+  session_start();
+  if (isset($_SESSION['userId'])) { 
+    Response::redirect('search');
+  }
+?>
  <form enctype="multipart/form-data" action="/" method="post">
    <h1 class="">Sistema de login</h1>
    <p>Documento <input type="text" placeholder="ingrese su documento" name="document"></p>

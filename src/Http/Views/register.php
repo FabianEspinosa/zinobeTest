@@ -1,5 +1,10 @@
 <?php 
 use App\Http\Controllers\CustomerDataController;
+use App\Kernel\Response;
+session_start();
+if (isset($_SESSION['userId'])) { 
+   Response::redirect('search');
+}
 ?>
 <form enctype="multipart/form-data" action="register" method="post">
    <h1 class="">Registrarse en el sistema</h1>   

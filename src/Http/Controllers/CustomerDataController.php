@@ -20,7 +20,7 @@ class CustomerDataController
         Response::view('register', $request->getParameters());
     }
     
-    public function search(Request $request)
+    public function welcome(Request $request)
     {
         Response::view('search', $request->getParameters());
     }
@@ -43,18 +43,18 @@ class CustomerDataController
             Response::view('register', ['msg' => 'Rectifique los datos']);
         } else {
             $entityManager = getEntityManager();
-            $usersEmail    = $entityManager->getRepository(Users::class)->findOneBy(array('email' => $data['email']));
-            $usersDocument = $entityManager->getRepository(Users::class)->findOneBy(array('document' => $data['document']));
+            $usersEmail    = $entityManager->getRepository(Users::class)->findOneBy(array('email' => trim($data['email'])));
+            $usersDocument = $entityManager->getRepository(Users::class)->findOneBy(array('document' => trim($data['document'])));
 
             if (isset($usersEmail) || isset($usersDocument)) {
                 Response::view('register', ['userAlreadyExist' => 1]);
             } else {
                 $entityManager = getEntityManager();
                 $user          = new Users();
-                $user->setUsername($data['username']);
-                $user->setDocument($data['document']);
-                $user->setEmail($data['email']);
-                $user->setCountry($data['country']);
+                $user->setUsername(trim($data['username']));
+                $user->setDocument(trim($data['document']));
+                $user->setEmail(trim($data['email']));
+                $user->setCountry(trim($data['country']));
                 $user->setPassword(sha1($data['password']));
                 try {
                     $entityManager->persist($user);
@@ -63,6 +63,36 @@ class CustomerDataController
                     Response::view('register', ['msg' => 'No se pudo crear el usuario']);
                 }
                 Response::view('register', ['userCreated' => 1]);
+            }
+        }
+    }
+
+    public function searchUser(Request $request)
+    {
+        $validator  = new Validator;
+        $data       = $request->getParameters();
+        $validation = $validator->validate($data, [
+            'dataField' => 'required|min:3'            
+        ]);
+        if ($validation->fails()) {
+            Response::view('search', ['msg' => 'Rectifique los datos']);
+        } else {
+            $entityManager = getEntityManager();
+            if (is_numeric($data['dataField'])) {
+                $userFind = $entityManager->getRepository(Users::class)->findOneBy(array('document' => trim($data['dataField'])));
+            } else {
+                $userFind = $entityManager->getRepository(Users::class)->findOneBy(array('email' => trim($data['dataField'])));
+            }          
+            if (isset($userFind)) {
+                $data["userCard"]["name"] = $userFind->getUsername();
+                $data["userCard"]["document"] = $userFind->getdocument();
+                $data["userCard"]["email"]   = $userFind->getEmail();
+                $countryCode = $userFind->getCountry();
+                $countryData = Services::consumeCountryApiByCode($countryCode);
+                $data["userCard"]["country"] = $countryData["name"]."($countryCode)";                
+                Response::view('search', $data);
+            } else {
+                Response::view('search', ['msg' => 'Usuario no encontrado']);
             }
         }
     }
