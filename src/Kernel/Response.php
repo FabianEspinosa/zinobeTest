@@ -26,8 +26,7 @@ class Response
         include_once $viewPath;
         $content = ob_get_clean();
         include_once $layoutPath;
-        $viewRender = ob_get_clean();
-        ob_end_clean();
+        $viewRender = ob_get_clean();       
         echo $viewRender;
     }
 
@@ -47,14 +46,13 @@ class Response
         include_once $viewPath;
         $content = ob_get_clean();
         include_once $layoutPath;
-        $viewRender = ob_get_clean();
-        ob_end_clean();
+        $viewRender = ob_get_clean();       
         echo $viewRender;
 
     }
 
     public static function redirect(string $path){
-        header("Location: $path");
+        header("Location: $path");       
     }
 
 }
