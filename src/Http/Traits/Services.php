@@ -8,7 +8,7 @@ namespace App\Http\Traits;
 trait Services {
 
     public static function consumeCountryApi() {
-        $url = 'https://restcountries.eu/rest/v2/all';
+        $url = 'http://restcountries.eu/rest/v2/all';
         $ch = curl_init();       
         $options = array(
             CURLOPT_URL => $url,
@@ -26,7 +26,7 @@ trait Services {
     }
 
     public static function consumeCountryApiByCode($code) {
-        $url = 'https://restcountries.eu/rest/v2/alpha/'.$code;
+        $url = 'http://restcountries.eu/rest/v2/alpha/'.$code;
         $ch = curl_init();       
         $options = array(
             CURLOPT_URL => $url,
