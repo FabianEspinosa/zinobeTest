@@ -47,7 +47,7 @@ class CustomerDataController
             $usersDocument = $entityManager->getRepository(Users::class)->findOneBy(array('document' => trim($data['document'])));
 
             if (isset($usersEmail) || isset($usersDocument)) {
-                Response::view('register', ['userAlreadyExist' => 1]);
+                Response::view('register', ['msg' => 'El usuario ya existe']);
             } else {
                 $entityManager = getEntityManager();
                 $user          = new Users();
@@ -62,7 +62,7 @@ class CustomerDataController
                 } catch (Exception $e) {
                     Response::view('register', ['msg' => 'No se pudo crear el usuario']);
                 }
-                Response::view('register', ['userCreated' => 1]);
+                Response::view('register', ['msg' => 'Usuario creado! ya puedes ingresar']);
             }
         }
     }

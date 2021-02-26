@@ -3,27 +3,34 @@ use App\Kernel\Response;
 session_start();
 if (isset($_SESSION['userId'])) {?>
 
-    <div>Bienvenido </div> <?php echo $_SESSION['username']; ?><a href="/logout">Cerrar sesión</a>
-     <p>Buscar usuario</p>
-     <form enctype="multipart/form-data" action="search" method="post">
-    <p>Documento o email <input type="text" placeholder="ingrese el documento o email para realizar la busqueda" name="dataField"></p>
-    <input type="submit" value="Buscar">
- </form>
- <?php if(isset($data["userCard"])){?>
- <div class='card'>                      
-    <div class='container'>
-        <h4><b><?php echo $data["userCard"]['name']?></b></h4>
-        <b>Documento: </b><?php echo $data["userCard"]['document']?>
-        <b>Email: </b><?php echo $data["userCard"]['email']?>
-        <b>Pais: </b><?php echo $data["userCard"]['country']?>
+    <div class="welcome">
+        <div class="wc">
+          <div class="wc-t">Bienvenido, </div>
+          <div class="wc-st"><?php echo $_SESSION['username'];?></div></div>
+        <div class="logout"><a href="/logout">Cerrar sesión</a></div>
     </div>
-</div>
- <?php 
- }   
-    if (isset($data['msg'])) {
-        echo $data['msg'];
+    <div class="form2">
+    <form enctype="multipart/form-data" action="search" method="post">
+        <input type="text" placeholder="ingrese el documento o email para realizar la busqueda" name="dataField"></p>
+        <button>BUSCAR</button>
+    </form>
+    </div>
+ <?php if(isset($data["userCard"])){?>
+<div class="login-page">
+  <div class="form upsie">
+      <p class="title">Usuario encontrado</p> 
+      <input disabled type="text" value="<?php echo $data["userCard"]["name"];?>"/>
+      <input disabled type="text" value="<?php echo $data["userCard"]['document']?>"/>
+      <input disabled type="text" value="<?php echo $data["userCard"]['email']?>"/>
+      <input disabled type="text" value="<?php echo $data["userCard"]['country']?>"/>
+      <?php 
+        }   
+            if (isset($data['msg'])) {
+                echo "<div class='form'><p style='color: red' class='title'>".$data['msg']."</p></div>";
+            }
+        } else {
+            Response::redirect('/');
     }
-} else {
-    Response::redirect('/');
-}
 ?>
+  </div>
+</div>

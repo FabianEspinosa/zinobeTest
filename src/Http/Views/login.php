@@ -5,12 +5,16 @@ use App\Kernel\Response;
     Response::redirect('search');
   }
 ?>
- <form enctype="multipart/form-data" action="/" method="post">
-   <h1 class="">Sistema de login</h1>
-   <p>Documento <input type="text" placeholder="ingrese su documento" name="document"></p>
-   <p>Contraseña <input type="password" placeholder="ingrese su contraseña" name="password"></p>
-<input type="submit" value="Ingresar"><a href="register">Registrar Usuario</a>
- </form>
-<?php if (isset($data['msg'])) {
-    echo $data['msg'];
-}?>
+<div class="login-page">
+  <div class="form">    
+    <form enctype="multipart/form-data" action="/" method="post" class="login-form">
+      <input name="document" type="text" placeholder="documento"/>
+      <input name="password" type="password" placeholder="contraseña"/>
+      <button>Ingresar</button>
+      <p class="message">No te has registrado? <a href="register">Registrate</a></p>
+      <?php if (isset($data['msg'])) {?>
+        <p class="message error"><?php echo $data['msg']; ?></p>
+      <?php }?>     
+    </form>
+  </div>
+</div>

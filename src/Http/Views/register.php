@@ -6,22 +6,20 @@ if (isset($_SESSION['userId'])) {
    Response::redirect('search');
 }
 ?>
-<form enctype="multipart/form-data" action="register" method="post">
-   <h1 class="">Registrarse en el sistema</h1>   
-   <p>Nombre de usuario <input type="text" placeholder="ingrese su nombre" name="username"></p>
-   <p>Documento <input type="text" placeholder="ingrese su documento" name="document"></p>
-   <p>Correo electronico <input type="text" placeholder="ingrese su correo" name="email"></p>
-   <p>Pais <?php echo CustomerDataController::countriesList();?></p>
-   <p>Password <input type="password" placeholder="ingrese su contraseña" name="password"></p>
-   <p>Confirme su Password <input type="password" placeholder="confirme su contraseña" name="password2"></p>
-<input type="submit" value="Registrar"><a href="/">Logear</a>
- </form>
- <?php if (isset($data['userAlreadyExist']) ) {?>
-  <div> El usuario ya existe </div>
-<?php }?>
- <?php if (isset($data['userCreated'])) {?>
-  <div> Usuario creado con exito </div>
-<?php }?>
- <?php if (isset($data['msg'])) {
-    echo $data['msg'];
-}?>
+<div class="login-page">
+  <div class="form">
+    <form enctype="multipart/form-data" action="register" method="post" class="register-form">
+      <input  name="username" type="text" placeholder="nombre"/>
+      <input  name="document"type="text" placeholder="documento"/>
+      <input name="email" type="text" placeholder="email"/>
+      <?php echo CustomerDataController::countriesList();?>      
+      <input name="password" type="password" placeholder="contraseña"/>
+      <input name="password2" type="password" placeholder="Repite tu contraseña"/>
+      <button>Registrar</button>
+      <p class="message">Ya estas registrado? <a href="/">Ingresa</a></p>
+      <?php if (isset($data['msg'])) {?>
+        <p class="message error"><?php echo $data['msg']; ?></p>
+      <?php }?>
+    </form>
+  </div>
+</div>
